@@ -41,8 +41,13 @@ class Product(BaseModel):
 # Add your own schemas here:
 # --------------------------------------------------
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class ChatRoom(BaseModel):
+    """Anonymous chat room"""
+    name: str = Field(..., min_length=1, max_length=60, description="Room display name")
+
+class ChatMessage(BaseModel):
+    """Message sent in a chat room"""
+    room_id: str = Field(..., description="Target room _id as string")
+    username: str = Field(..., min_length=1, max_length=30, description="Anonymous display name")
+    content: str = Field(..., min_length=1, max_length=2000, description="Message text")
+    type: str = Field("text", description="Message type")
